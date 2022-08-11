@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import validateSession from "../helpers/validateSession";
-import useLogin from "../hooks/login.hook";
+import validateSession from "../../helpers/validateSession";
+import useRegister from "../../hooks/register.hook";
 
-const Home: NextPage = () => {
-  const { setEmail, setPassword, sendLoginData } = useLogin();
+const Register: NextPage = () => {
+  const { setEmail, setPassword, sendRegisterData, setName } = useRegister();
   return (
     <div>
       <Head>
@@ -34,6 +34,16 @@ const Home: NextPage = () => {
                   </div>
                   <div className="form-floating mb-3">
                     <input
+                      type="string"
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="name@example.com"
+                      onChange={({ target }) => setName(target.value)}
+                    />
+                    <label htmlFor="floatingInput">Hitman name</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
                       type="password"
                       className="form-control"
                       id="floatingPassword"
@@ -44,8 +54,8 @@ const Home: NextPage = () => {
                   </div>
 
                   <div className="form-check mb-3">
-                    <Link className="form-check-label" href="/register">
-                      Register
+                    <Link className="form-check-label" href="/">
+                      Sign In
                     </Link>
                   </div>
                   <div className="d-grid">
@@ -54,10 +64,10 @@ const Home: NextPage = () => {
                       type="submit"
                       onClick={(e) => {
                         e.preventDefault();
-                        sendLoginData();
+                        sendRegisterData();
                       }}
                     >
-                      Sign in
+                      Register
                     </button>
                   </div>
                   <hr className="my-4" />
@@ -71,7 +81,7 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Register;
 
 export const getServerSideProps = async ({
   req,
